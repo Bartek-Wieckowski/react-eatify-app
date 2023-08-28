@@ -1,0 +1,8 @@
+@import "../../_variables.scss";
+.header {
+  grid-area: head;
+  background-color: $color-special;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
