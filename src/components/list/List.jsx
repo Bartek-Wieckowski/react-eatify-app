@@ -1,9 +1,14 @@
 import { useGlobal } from "../../context/GlobalContext";
 import imagePaths from "../../utils/images";
+import Spinner from "../spinner/Spinner";
 import "./list.scss";
 
 const List = () => {
-  const { recipes } = useGlobal();
+  const { recipes, isLoading } = useGlobal();
+
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <div className="search-results">
       <ul className="results">
@@ -17,7 +22,7 @@ const List = () => {
                 <h4 className="preview__title">{recipe.title}</h4>
                 <p className="preview__publisher">{recipe.publisher}</p>
                 <div className="preview__user-generated">
-                    <img src={imagePaths.user} />
+                  <img src={imagePaths.user} />
                 </div>
               </div>
             </a>
