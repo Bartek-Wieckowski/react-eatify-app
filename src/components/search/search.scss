@@ -1,0 +1,51 @@
+@import "../../_variables.scss";
+
+.search {
+    background-color: #fff;
+    border-radius: 10rem;
+    display: flex;
+    align-items: center;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    margin-right: 3rem;
+    transition: all 0.3s;
+  
+    &:focus-within {
+      transform: translateY(-2px);
+      box-shadow: 0 0.7rem 3rem rgba($color-txt, 0.08);
+    }
+  
+    &__field {
+      border: none;
+      background: none;
+      font-family: inherit;
+      color: inherit;
+      font-size: 1.7rem;
+      width: 30rem;
+  
+      &:focus {
+        outline: none;
+      }
+  
+      &::placeholder {
+        color: $color-txt;
+      }
+  
+      @media only screen and (max-width: $bp-medium) {
+        width: auto;
+  
+        &::placeholder {
+          color: white;
+        }
+      }
+    }
+  
+    &__btn {
+      font-weight: 600;
+      font-family: inherit;
+      border: none;
+      background: transparent;
+      width: 32px;
+      height: 32px;
+    }
+  }
