@@ -15,7 +15,7 @@ function reducer(state, action) {
     case "recipes/loaded":
       return { ...state, isLoading: false, recipes: action.payload };
     case "rejected":
-      return { ...state, isLoading: false };
+      return { ...state, isLoading: false, error: action.payload };
 
     default:
       throw new Error("Unknown action type");
