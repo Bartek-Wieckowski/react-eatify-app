@@ -1,13 +1,17 @@
 import { useGlobal } from "../../context/GlobalContext";
 import imagePaths from "../../utils/images";
+import ErrorMsg from "../error-msg/ErrorMsg";
 import Spinner from "../spinner/Spinner";
 import "./list.scss";
 
 const List = () => {
-  const { recipes, isLoading } = useGlobal();
+  const { recipes, isLoading, error } = useGlobal();
 
   if (isLoading) {
     return <Spinner />;
+  }
+  if (error) {
+    return <ErrorMsg>{error}</ErrorMsg>;
   }
   return (
     <div className="search-results">
