@@ -13,7 +13,7 @@ function reducer(state, action) {
     case "loading":
       return { ...state, isLoading: true };
     case "recipes/loaded":
-      return { ...state, isLoading: false, recipes: action.payload };
+      return { ...state, isLoading: false, recipes: action.payload, error: "" };
     case "rejected":
       return { ...state, isLoading: false, error: action.payload };
 
