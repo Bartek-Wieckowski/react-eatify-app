@@ -4,6 +4,7 @@ import imagePaths from "../../utils/images";
 import ErrorMsg from "../error-msg/ErrorMsg";
 import Spinner from "../spinner/Spinner";
 import "./list.scss";
+import { Link } from "react-router-dom";
 
 const List = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,7 +18,7 @@ const List = () => {
 
   const renderItems = currentItems.map((recipe) => (
     <li className="preview" key={recipe.id}>
-      <a className="preview__link preview__link--active" href="#23456">
+      <Link className="preview__link preview__link--active" to={`recipe/${recipe.id}`}>
         <figure className="preview__fig">
           <img src={recipe.image_url} alt={recipe.title} />
         </figure>
@@ -28,7 +29,7 @@ const List = () => {
             <img src={imagePaths.user} alt="user" />
           </div>
         </div>
-      </a>
+      </Link>
     </li>
   ));
 
@@ -36,7 +37,8 @@ const List = () => {
     const pageNumbers = [];
     if (currentPage > 1) {
       pageNumbers.push(
-        <button key={"btn-prev"}
+        <button
+          key={"btn-prev"}
           className="btn--inline pagination-wrapper__btn pagination-wrapper__btn--prev"
           onClick={() => setCurrentPage(currentPage - 1)}
         >
@@ -47,7 +49,8 @@ const List = () => {
     }
     if (currentPage < totalPages) {
       pageNumbers.push(
-        <button key={"btn-next"}
+        <button
+          key={"btn-next"}
           className="btn--inline pagination-wrapper__btn pagination-wrapper__btn--next"
           onClick={() => setCurrentPage(currentPage + 1)}
         >
