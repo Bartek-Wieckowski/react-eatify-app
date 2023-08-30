@@ -35,13 +35,26 @@ const List = () => {
   const renderPageNumbers = () => {
     const pageNumbers = [];
     if (currentPage > 1) {
-      pageNumbers.push(<button className="btn--inline pagination-wrapper__btn pagination-wrapper__btn--prev" onClick={() => setCurrentPage(currentPage - 1)}><img src={imagePaths.arrowLeft} alt="" style={{width:"20px"}} />
-        {currentPage - 1}
-      </button>);
+      pageNumbers.push(
+        <button key={"btn-prev"}
+          className="btn--inline pagination-wrapper__btn pagination-wrapper__btn--prev"
+          onClick={() => setCurrentPage(currentPage - 1)}
+        >
+          <img src={imagePaths.arrowLeft} alt="" style={{ width: "20px" }} />
+          {currentPage - 1}
+        </button>
+      );
     }
     if (currentPage < totalPages) {
-      pageNumbers.push(<button className="btn--inline pagination-wrapper__btn pagination-wrapper__btn--next" onClick={() => setCurrentPage(currentPage + 1)}>{currentPage + 1}
-      <img src={imagePaths.arrowRight} alt="" style={{width:"20px"}} /></button>);
+      pageNumbers.push(
+        <button key={"btn-next"}
+          className="btn--inline pagination-wrapper__btn pagination-wrapper__btn--next"
+          onClick={() => setCurrentPage(currentPage + 1)}
+        >
+          {currentPage + 1}
+          <img src={imagePaths.arrowRight} alt="" style={{ width: "20px" }} />
+        </button>
+      );
     }
     return pageNumbers;
   };
