@@ -115,15 +115,9 @@
   }
 }
 
-.pagination {
+.pagination-wrapper{
   margin-top: auto;
   padding: 0 3.5rem;
-
-  &::after {
-    content: "";
-    display: table;
-    clear: both;
-  }
 
   &__btn {
     &--prev {
@@ -133,4 +127,18 @@
       float: right;
     }
   }
+}
+.btn--inline {
+  color: $color-primary;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border: none;
+  background-color: $color-accent;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10rem;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
 }
