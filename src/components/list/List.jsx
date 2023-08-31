@@ -4,12 +4,13 @@ import imagePaths from "../../utils/images";
 import ErrorMsg from "../error-msg/ErrorMsg";
 import Spinner from "../spinner/Spinner";
 import "./list.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const List = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { recipes, isLoading, error } = useGlobal();
 
+  const location = useLocation();
   const itemsPerPage = 10;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -18,7 +19,12 @@ const List = () => {
 
   const renderItems = currentItems.map((recipe) => (
     <li className="preview" key={recipe.id}>
-      <Link className="preview__link preview__link--active" to={`recipe/${recipe.id}`}>
+      <Link
+        className={`preview__link ${
+          location.pathname.includes(`/recipe/${recipe.id}`) ? "preview__link--active" : ""
+        }`}
+        to={`recipe/${recipe.id}`}
+      >
         <figure className="preview__fig">
           <img src={recipe.image_url} alt={recipe.title} />
         </figure>
