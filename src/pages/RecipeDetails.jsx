@@ -4,7 +4,7 @@ import SingleRecipe from "../components/single-recipe/SingleRecipe";
 
 const RecipeDetails = () => {
   return (
-    <div className="recipe-details">
+    <div className="recipe">
       <Routes>
         <Route path="recipe/:id" element={<SingleRecipe  />} />
       </Routes>
