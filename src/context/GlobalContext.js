@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 
 const GlobalContext = createContext();
 
@@ -6,7 +6,6 @@ const initialState = {
   isLoading: false,
   error: "",
   recipes: [],
-  currentRecipe: {},
 };
 
 function reducer(state, action) {
@@ -15,8 +14,6 @@ function reducer(state, action) {
       return { ...state, isLoading: true };
     case "recipes/loaded":
       return { ...state, isLoading: false, recipes: action.payload, error: "" };
-    case "recipe/loaded":
-      return { ...state, isLoading: false, currentRecipe: action.payload, error: "" };
     case "rejected":
       return { ...state, isLoading: false, error: action.payload };
 
@@ -26,29 +23,10 @@ function reducer(state, action) {
 }
 
 function GlobalProvider({ children }) {
-  const [{ isLoading, recipes, error, currentRecipe }, dispatch] = useReducer(reducer, initialState);
-
-  const getRecipe = useCallback(
-    async function getRecipe(id) {
-      if (Number(id) === currentRecipe.id) return;
-      dispatch({ type: "loading" });
-
-      try {
-        const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`);
-        const data = await res.json();
-        dispatch({ type: "recipe/loaded", payload: data.data.recipe });
-      } catch (error) {
-        dispatch({
-          type: "reject",
-          payload: "There was an error loading the recipe...",
-        });
-      }
-    },
-    [currentRecipe.id]
-  );
+  const [{ isLoading, recipes, error }, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <GlobalContext.Provider value={{ isLoading, recipes, error, currentRecipe, getRecipe, dispatch }}>
+    <GlobalContext.Provider value={{ isLoading, recipes, error, dispatch }}>
       {children}
     </GlobalContext.Provider>
   );
