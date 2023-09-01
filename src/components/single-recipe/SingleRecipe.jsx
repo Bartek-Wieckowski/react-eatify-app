@@ -40,7 +40,8 @@ const SingleRecipe = () => {
     }
   }, [globalError, navigate]);
 
-  const { title, image_url } = currentRecipe;
+  const { title, image_url, cooking_time, servings, ingredients } = currentRecipe;
+  const ingredientValues =ingredients ? Object.values(ingredients) : [];
 
   if (isLoadingLocal) {
     return <Spinner />;
@@ -48,6 +49,7 @@ const SingleRecipe = () => {
   if (errorLocal) {
     return <ErrorMsg>{"Something went wrong..."}</ErrorMsg>;
   }
+  
 
   return (
     <>
@@ -60,12 +62,12 @@ const SingleRecipe = () => {
       <div className="recipe__details">
         <div className="recipe__info">
           <img src={imagePaths.clock} alt="" />
-          <span className="recipe__info-data recipe__info-data--minutes">45</span>
+          <span className="recipe__info-data recipe__info-data--minutes">{cooking_time}</span>
           <span className="recipe__info-text">minutes</span>
         </div>
         <div className="recipe__info">
           <img src={imagePaths.users} alt="" />
-          <span className="recipe__info-data recipe__info-data--people">4</span>
+          <span className="recipe__info-data recipe__info-data--people">{servings}</span>
           <span className="recipe__info-text">servings</span>
 
           <div className="recipe__info-buttons">
@@ -77,9 +79,32 @@ const SingleRecipe = () => {
             </button>
           </div>
         </div>
+        <div class="recipe__user-generated">
+          <svg>
+            <use href="src/img/icons.svg#icon-user"></use>
+          </svg>
+        </div>
         <button className="btn--tiny">
           <img src={imagePaths.bookmark} alt="" />
         </button>
+      </div>
+
+      <div class="recipe__ingredients">
+        <h2 class="heading--2">Recipe ingredients</h2>
+        <ul class="recipe__ingredient-list">
+          {ingredientValues?.map((ingr) => (
+            <li class="recipe__ingredient">
+              <svg class="recipe__icon">
+                <use href="src/img/icons.svg#icon-check"></use>
+              </svg>
+              <div class="recipe__quantity">{ingr?.quantity}</div>
+              <div class="recipe__description">
+                <span class="recipe__unit">{ingr?.unit}</span>
+                {ingr?.description}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );
