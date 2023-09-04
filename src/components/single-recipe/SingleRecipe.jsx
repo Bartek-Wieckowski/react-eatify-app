@@ -15,6 +15,7 @@ const SingleRecipe = () => {
   const [errorLocal, setErrorLocal] = useState(false);
   const [ingredientValuesCopy, setIngredientValuesCopy] = useState([]);
   const [servingsPeople, setServingsPeople] = useState(0);
+  const [cookingTime, setCookingTime] = useState(0);
 
   const { error: globalError } = useGlobal();
 
@@ -33,6 +34,7 @@ const SingleRecipe = () => {
         setCurrentRecipe(data.data.recipe);
         setIngredientValuesCopy(data.data.recipe.ingredients || []);
         setServingsPeople(data.data.recipe.servings);
+        setCookingTime(data.data.recipe.cooking_time);
       } catch (error) {
         setErrorLocal(true);
       } finally {
@@ -49,13 +51,20 @@ const SingleRecipe = () => {
   }, [globalError, navigate]);
 
   const handleIncreaseQuantity = () => {
-    const copy = [...ingredientValuesCopy];
-    copy.forEach((ingredient) => {
-      ingredient.quantity = (ingredient.quantity * servings + 1) / servings;
-    });
-    setIngredientValuesCopy(copy);
-    setServingsPeople((prev) => prev + 1);
+    if (servingsPeople < 10) {
+      const newServings = servingsPeople + 1;
+      if (newServings === servings * 2) {
+        setCookingTime(Math.ceil(cookingTime * 2));
+      }
+      const copy = [...ingredientValuesCopy];
+      copy.forEach((ingredient) => {
+        ingredient.quantity = (ingredient.quantity * servings + 1) / servings;
+      });
+      setIngredientValuesCopy(copy);
+      setServingsPeople((prev) => prev + 1);
+    }
   };
+
   const handleDecreaseQuantity = () => {
     if (servingsPeople > 1) {
       const copy = [...ingredientValuesCopy];
@@ -64,6 +73,11 @@ const SingleRecipe = () => {
           ingredient.quantity = (ingredient.quantity * servings - 1) / servings;
         }
       });
+      console.log(servingsPeople);
+      console.log(servings);
+      if (servingsPeople - 1 === servings) {
+        setCookingTime(cooking_time);
+      }
       setIngredientValuesCopy(copy);
       setServingsPeople((prev) => prev - 1);
     }
@@ -87,7 +101,7 @@ const SingleRecipe = () => {
       <div className="recipe__details">
         <div className="recipe__info">
           <img src={imagePaths.clock} alt="" />
-          <span className="recipe__info-data recipe__info-data--minutes">{cooking_time}</span>
+          <span className="recipe__info-data recipe__info-data--minutes">{cookingTime}</span>
           <span className="recipe__info-text">minutes</span>
         </div>
         <div className="recipe__info">
