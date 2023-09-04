@@ -17,7 +17,7 @@ const SingleRecipe = () => {
   const [servingsPeople, setServingsPeople] = useState(0);
   const [cookingTime, setCookingTime] = useState(0);
 
-  const { error: globalError } = useGlobal();
+  const { error: globalError, dispatch } = useGlobal();
 
   const { title, image_url, cooking_time, servings } = currentRecipe;
 
@@ -83,6 +83,10 @@ const SingleRecipe = () => {
     }
   };
 
+  const handleAddRecipeToBookmakr = () => {
+    dispatch({ type: "recipe/addedBookmark", payload: currentRecipe });
+  };
+
   if (isLoadingLocal) {
     return <Spinner />;
   }
@@ -123,7 +127,7 @@ const SingleRecipe = () => {
             <use href="src/img/icons.svg#icon-user"></use>
           </svg>
         </div>
-        <button className="btn--tiny">
+        <button className="btn--tiny" onClick={() => handleAddRecipeToBookmakr()}>
           <img src={imagePaths.bookmark} alt="" />
         </button>
       </div>
@@ -133,7 +137,7 @@ const SingleRecipe = () => {
         <ul className="recipe__ingredient-list">
           {ingredientValuesCopy?.map((ingr) => (
             <li className="recipe__ingredient" key={crypto.randomUUID()}>
-              <img src={imagePaths.check} className="recipe__icon" alt="check"/>
+              <img src={imagePaths.check} className="recipe__icon" alt="check" />
               <div className="recipe__quantity">
                 {ingr?.quantity ? new Fraction(ingr?.quantity).toString() : ""}
               </div>
