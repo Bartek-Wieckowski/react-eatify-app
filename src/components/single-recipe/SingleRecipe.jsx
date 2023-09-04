@@ -133,9 +133,7 @@ const SingleRecipe = () => {
         <ul className="recipe__ingredient-list">
           {ingredientValuesCopy?.map((ingr) => (
             <li className="recipe__ingredient" key={crypto.randomUUID()}>
-              <svg className="recipe__icon">
-                <use href="src/img/icons.svg#icon-check"></use>
-              </svg>
+              <img src={imagePaths.check} className="recipe__icon" alt="check"/>
               <div className="recipe__quantity">
                 {ingr?.quantity ? new Fraction(ingr?.quantity).toString() : ""}
               </div>
