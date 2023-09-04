@@ -6,6 +6,7 @@ const initialState = {
   isLoading: false,
   error: "",
   recipes: [],
+  bookmarksRecipe: [],
 };
 
 function reducer(state, action) {
@@ -14,6 +15,16 @@ function reducer(state, action) {
       return { ...state, isLoading: true };
     case "recipes/loaded":
       return { ...state, isLoading: false, recipes: action.payload, error: "" };
+    case "recipe/addedBookmark":
+      const existingBookmarks = JSON.parse(localStorage.getItem("favRecipes")) || [];
+      const isDuplicate = existingBookmarks.some((bookmark) => bookmark.id === action.payload.id);
+      if (!isDuplicate) {
+        const updatedBookmarks = [...existingBookmarks, action.payload];
+        localStorage.setItem("favRecipes", JSON.stringify(updatedBookmarks));
+        return { ...state, bookmarksRecipe: updatedBookmarks };
+      }
+      return state;
+
     case "rejected":
       return { ...state, isLoading: false, error: action.payload };
 
@@ -23,10 +34,10 @@ function reducer(state, action) {
 }
 
 function GlobalProvider({ children }) {
-  const [{ isLoading, recipes, error }, dispatch] = useReducer(reducer, initialState);
+  const [{ isLoading, recipes, error, bookmarksRecipe }, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <GlobalContext.Provider value={{ isLoading, recipes, error, dispatch }}>
+    <GlobalContext.Provider value={{ isLoading, recipes, error, bookmarksRecipe, dispatch }}>
       {children}
     </GlobalContext.Provider>
   );
