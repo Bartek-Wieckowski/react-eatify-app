@@ -5,14 +5,20 @@ import Spinner from "../spinner/Spinner";
 import ErrorMsg from "../error-msg/ErrorMsg";
 import imagePaths from "../../utils/images";
 import { useGlobal } from "../../context/GlobalContext";
+import { Fraction } from "fractional";
 
 const SingleRecipe = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [currentRecipe, setCurrentRecipe] = useState({} || null);
   const [isLoadingLocal, setIsLoadingLocal] = useState(false);
   const [errorLocal, setErrorLocal] = useState(false);
+  const [ingredientValuesCopy, setIngredientValuesCopy] = useState([]);
+  const [servingsPeople, setServingsPeople] = useState(0);
+
   const { error: globalError } = useGlobal();
-  const navigate = useNavigate();
+
+  const { title, image_url, cooking_time, servings } = currentRecipe;
 
   useEffect(() => {
     async function getRecipe(id) {
@@ -25,6 +31,8 @@ const SingleRecipe = () => {
         );
         const data = await res.json();
         setCurrentRecipe(data.data.recipe);
+        setIngredientValuesCopy(data.data.recipe.ingredients || []);
+        setServingsPeople(data.data.recipe.servings);
       } catch (error) {
         setErrorLocal(true);
       } finally {
@@ -40,8 +48,26 @@ const SingleRecipe = () => {
     }
   }, [globalError, navigate]);
 
-  const { title, image_url, cooking_time, servings, ingredients } = currentRecipe;
-  const ingredientValues =ingredients ? Object.values(ingredients) : [];
+  const handleIncreaseQuantity = () => {
+    const copy = [...ingredientValuesCopy];
+    copy.forEach((ingredient) => {
+      ingredient.quantity = (ingredient.quantity * servings + 1) / servings;
+    });
+    setIngredientValuesCopy(copy);
+    setServingsPeople((prev) => prev + 1);
+  };
+  const handleDecreaseQuantity = () => {
+    if (servingsPeople > 1) {
+      const copy = [...ingredientValuesCopy];
+      copy.forEach((ingredient) => {
+        if (ingredient.quantity > 0) {
+          ingredient.quantity = (ingredient.quantity * servings - 1) / servings;
+        }
+      });
+      setIngredientValuesCopy(copy);
+      setServingsPeople((prev) => prev - 1);
+    }
+  };
 
   if (isLoadingLocal) {
     return <Spinner />;
@@ -49,7 +75,6 @@ const SingleRecipe = () => {
   if (errorLocal) {
     return <ErrorMsg>{"Something went wrong..."}</ErrorMsg>;
   }
-  
 
   return (
     <>
@@ -67,19 +92,19 @@ const SingleRecipe = () => {
         </div>
         <div className="recipe__info">
           <img src={imagePaths.users} alt="" />
-          <span className="recipe__info-data recipe__info-data--people">{servings}</span>
+          <span className="recipe__info-data recipe__info-data--people">{servingsPeople}</span>
           <span className="recipe__info-text">servings</span>
 
           <div className="recipe__info-buttons">
-            <button className="btn--tiny btn--increase-servings">
+            <button className="btn--tiny btn--increase-servings" onClick={() => handleDecreaseQuantity()}>
               <img src={imagePaths.minus} alt="" />
             </button>
-            <button className="btn--tiny btn--increase-servings">
+            <button className="btn--tiny btn--increase-servings" onClick={() => handleIncreaseQuantity()}>
               <img src={imagePaths.plus} alt="" />
             </button>
           </div>
         </div>
-        <div class="recipe__user-generated">
+        <div className="recipe__user-generated">
           <svg>
             <use href="src/img/icons.svg#icon-user"></use>
           </svg>
@@ -89,17 +114,19 @@ const SingleRecipe = () => {
         </button>
       </div>
 
-      <div class="recipe__ingredients">
-        <h2 class="heading--2">Recipe ingredients</h2>
-        <ul class="recipe__ingredient-list">
-          {ingredientValues?.map((ingr) => (
-            <li class="recipe__ingredient">
-              <svg class="recipe__icon">
+      <div className="recipe__ingredients">
+        <h2 className="heading--2">Recipe ingredients</h2>
+        <ul className="recipe__ingredient-list">
+          {ingredientValuesCopy?.map((ingr) => (
+            <li className="recipe__ingredient" key={crypto.randomUUID()}>
+              <svg className="recipe__icon">
                 <use href="src/img/icons.svg#icon-check"></use>
               </svg>
-              <div class="recipe__quantity">{ingr?.quantity}</div>
-              <div class="recipe__description">
-                <span class="recipe__unit">{ingr?.unit}</span>
+              <div className="recipe__quantity">
+                {ingr?.quantity ? new Fraction(ingr?.quantity).toString() : ""}
+              </div>
+              <div className="recipe__description">
+                <span className="recipe__unit">{ingr?.unit} </span>
                 {ingr?.description}
               </div>
             </li>
