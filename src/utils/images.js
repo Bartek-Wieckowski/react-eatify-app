@@ -10,6 +10,7 @@ import minus from "../assets/img/minus-circle-bold.svg";
 import users from "../assets/img/users-bold.svg";
 import clock from "../assets/img/clock-bold.svg";
 import bookmark from "../assets/img/bookmark-bold.svg";
+import bookmarkSave from "../assets/img/bookmark-fill.svg";
 import check from "../assets/img/check-fat-bold.svg";
 
 const imagePaths = {
@@ -25,6 +26,7 @@ const imagePaths = {
   users,
   clock,
   bookmark,
+  bookmarkSave,
   check,
 };
 
