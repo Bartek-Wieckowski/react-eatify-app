@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGlobal } from "../../context/GlobalContext";
 import imagePaths from "../../utils/images";
 import ErrorMsg from "../error-msg/ErrorMsg";
@@ -8,9 +8,16 @@ import { Link, useLocation } from "react-router-dom";
 
 const List = () => {
   const [currentPage, setCurrentPage] = useState(1);
+
   const { recipes, isLoading, error } = useGlobal();
 
   const location = useLocation();
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [recipes])
+  
+
   const itemsPerPage = 10;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -31,7 +38,7 @@ const List = () => {
         <div className="preview__data">
           <h4 className="preview__title">{recipe.title}</h4>
           <p className="preview__publisher">{recipe.publisher}</p>
-          <div className="preview__user-generated">
+          <div className="preview__user-generated" style={{display:"none"}}>
             <img src={imagePaths.user} alt="user" />
           </div>
         </div>
