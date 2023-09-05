@@ -6,7 +6,7 @@ const initialState = {
   isLoading: false,
   error: "",
   recipes: [],
-  bookmarksRecipe: [],
+  bookmarksRecipe: JSON.parse(localStorage.getItem("favRecipes")) || [],
 };
 
 function reducer(state, action) {
@@ -16,18 +16,16 @@ function reducer(state, action) {
     case "recipes/loaded":
       return { ...state, isLoading: false, recipes: action.payload, error: "" };
     case "recipe/addedBookmark":
-      const existingBookmarks = JSON.parse(localStorage.getItem("favRecipes")) || [];
-      const isDuplicate = existingBookmarks.some((bookmark) => bookmark.id === action.payload.id);
+      const isDuplicate = state.bookmarksRecipe.some((bookmark) => bookmark.id === action.payload.id);
       if (!isDuplicate) {
-        const updatedBookmarks = [...existingBookmarks, action.payload];
+        const updatedBookmarks = [...state.bookmarksRecipe, action.payload];
+        const newState = { ...state, bookmarksRecipe: updatedBookmarks };
         localStorage.setItem("favRecipes", JSON.stringify(updatedBookmarks));
-        return { ...state, bookmarksRecipe: updatedBookmarks };
+        return newState;
       }
       return state;
-
     case "rejected":
       return { ...state, isLoading: false, error: action.payload };
-
     default:
       throw new Error("Unknown action type");
   }
