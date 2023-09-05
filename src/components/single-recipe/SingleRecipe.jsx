@@ -87,7 +87,15 @@ const SingleRecipe = () => {
   };
 
   const handleAddRecipeToBookmark = () => {
-    dispatch({ type: "recipe/addedBookmark", payload: currentRecipe });
+    const isDuplicate = existingBookmarks.some(
+      (bookmarkedRecipe) => bookmarkedRecipe.id === currentRecipe.id
+    );
+
+    if (isDuplicate) {
+      dispatch({ type: "recipe/removedBookmark", payload: currentRecipe.id });
+    } else {
+      dispatch({ type: "recipe/addedBookmark", payload: currentRecipe });
+    }
   };
 
   const isBookmarked = (recipeID) => {
