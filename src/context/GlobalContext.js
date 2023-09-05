@@ -24,6 +24,10 @@ function reducer(state, action) {
         return newState;
       }
       return state;
+    case "recipe/removedBookmark":
+      const updatedBookmarks = state.bookmarksRecipe.filter((bookmark) => bookmark.id !== action.payload);
+      localStorage.setItem("favRecipes", JSON.stringify(updatedBookmarks));
+      return { ...state, bookmarksRecipe: updatedBookmarks };
     case "rejected":
       return { ...state, isLoading: false, error: action.payload };
     default:
