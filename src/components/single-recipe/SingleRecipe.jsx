@@ -10,6 +10,7 @@ import { Fraction } from "fractional";
 const SingleRecipe = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const [currentRecipe, setCurrentRecipe] = useState({} || null);
   const [isLoadingLocal, setIsLoadingLocal] = useState(false);
   const [errorLocal, setErrorLocal] = useState(false);
@@ -20,6 +21,8 @@ const SingleRecipe = () => {
   const { error: globalError, dispatch } = useGlobal();
 
   const { title, image_url, cooking_time, servings } = currentRecipe;
+
+  const existingBookmarks = JSON.parse(localStorage.getItem("favRecipes")) || [];
 
   useEffect(() => {
     async function getRecipe(id) {
@@ -87,6 +90,10 @@ const SingleRecipe = () => {
     dispatch({ type: "recipe/addedBookmark", payload: currentRecipe });
   };
 
+  const isBookmarked = (recipeID) => {
+    return existingBookmarks.some((bookmarkedRecipe) => bookmarkedRecipe.id === recipeID);
+  };
+
   if (isLoadingLocal) {
     return <Spinner />;
   }
@@ -128,7 +135,11 @@ const SingleRecipe = () => {
           </svg>
         </div>
         <button className="btn--tiny" onClick={() => handleAddRecipeToBookmark()}>
-          <img src={imagePaths.bookmark} alt="" />
+          {!isBookmarked(id) ? (
+            <img src={imagePaths.bookmark} alt="" />
+          ) : (
+            <img src={imagePaths.bookmarkSave} alt="" />
+          )}
         </button>
       </div>
 
