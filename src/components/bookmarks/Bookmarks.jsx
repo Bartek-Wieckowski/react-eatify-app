@@ -1,15 +1,10 @@
-import { useEffect, useState } from "react";
 import imagePaths from "../../utils/images";
 import "./bookmarks.scss";
 import { Link } from "react-router-dom";
+import { useGlobal } from "../../context/GlobalContext";
 
 function Bookmarks() {
-  const [bookmarks, setBookmarks] = useState([]);
-
-  useEffect(() => {
-    const storedBookmarks = JSON.parse(localStorage.getItem("favRecipes")) || [];
-    setBookmarks(storedBookmarks);
-  }, []);
+  const {bookmarksRecipe} = useGlobal();
 
   return (
     <nav className="nav">
@@ -20,14 +15,14 @@ function Bookmarks() {
           </button>
           <div className="bookmarks">
             <ul className="bookmarks__list">
-              {bookmarks.length === 0 && (
+              {bookmarksRecipe.length === 0 && (
                 <div className="message">
                   <div></div>
                   <p>No bookmarks yet. Find a nice recipe and bookmark it :)</p>
                 </div>
               )}
 
-              {bookmarks.map((b) => (
+              {bookmarksRecipe.map((b) => (
                 <li className="preview" key={b.id}>
                   <Link className="preview__link" to={"recipe/" + b.id}>
                     <figure className="preview__fig">
