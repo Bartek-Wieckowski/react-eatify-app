@@ -83,7 +83,7 @@ const SingleRecipe = () => {
     }
   };
 
-  const handleAddRecipeToBookmakr = () => {
+  const handleAddRecipeToBookmark = () => {
     dispatch({ type: "recipe/addedBookmark", payload: currentRecipe });
   };
 
@@ -127,7 +127,7 @@ const SingleRecipe = () => {
             <use href="src/img/icons.svg#icon-user"></use>
           </svg>
         </div>
-        <button className="btn--tiny" onClick={() => handleAddRecipeToBookmakr()}>
+        <button className="btn--tiny" onClick={() => handleAddRecipeToBookmark()}>
           <img src={imagePaths.bookmark} alt="" />
         </button>
       </div>
