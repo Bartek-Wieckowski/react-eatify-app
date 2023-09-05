@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/react-eatify-app/static/css/main.677cf729.css",
+    "main.js": "/react-eatify-app/static/js/main.8181f6a3.js",
+    "index.html": "/react-eatify-app/index.html",
+    "static/media/fork-knife-bold.svg": "/react-eatify-app/static/media/fork-knife-bold.a3f1820c4aedf0205f9aba51ff146bb5.svg",
+    "static/media/warning-bold.svg": "/react-eatify-app/static/media/warning-bold.fe60c99a540cb6294d0768348cf2e7b4.svg",
+    "static/media/users-bold.svg": "/react-eatify-app/static/media/users-bold.277386f30fc6493c3022f300b3eb1b0b.svg",
+    "static/media/check-fat-bold.svg": "/react-eatify-app/static/media/check-fat-bold.df41352c2782c38b205a4a73a2b1051f.svg",
+    "static/media/bookmark-bold.svg": "/react-eatify-app/static/media/bookmark-bold.7744a3d652343d59710a29b4205f2f4c.svg",
+    "static/media/user-bold.svg": "/react-eatify-app/static/media/user-bold.fa7df2494c399adfad91fe36aa5b4809.svg",
+    "static/media/plus-circle-bold.svg": "/react-eatify-app/static/media/plus-circle-bold.fed0dc1330f1d08dca4a1656bf41e1b8.svg",
+    "static/media/circle-notch-bold.svg": "/react-eatify-app/static/media/circle-notch-bold.37902110898ef2a8f27472a27219bd29.svg",
+    "static/media/clock-bold.svg": "/react-eatify-app/static/media/clock-bold.1757cb169a3d49badd3216a859c37d77.svg",
+    "static/media/bookmark-fill.svg": "/react-eatify-app/static/media/bookmark-fill.6ed203fecd73c52cc864f88bb7cea0d7.svg",
+    "static/media/minus-circle-bold.svg": "/react-eatify-app/static/media/minus-circle-bold.c1367bd9e251d872ca68da1a18519787.svg",
+    "static/media/arrow-left-bold.svg": "/react-eatify-app/static/media/arrow-left-bold.cc37cafb9fe4b2ae5b363c76fce4c064.svg",
+    "static/media/arrow-right-bold.svg": "/react-eatify-app/static/media/arrow-right-bold.59c422268837201df45a099dbc44b1fe.svg",
+    "static/media/magnifying-glass-bold.svg": "/react-eatify-app/static/media/magnifying-glass-bold.7b413b2e69f605ec0f2733240584bb2a.svg",
+    "main.677cf729.css.map": "/react-eatify-app/static/css/main.677cf729.css.map",
+    "main.8181f6a3.js.map": "/react-eatify-app/static/js/main.8181f6a3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.677cf729.css",
+    "static/js/main.8181f6a3.js"
+  ]
+}
